@@ -1,0 +1,21 @@
+consul:
+    command:  -server -bootstrap -rejoin
+    image: consul:latest
+    hostname: "registry"
+    ports: 
+        - "8300:8300"
+        - "8400:8400"
+        - "8500:8500"
+        - "8600:53/udp"
+web:
+    command: --registry_address=registry:8500 --registry_interval=5 --registry_ttl=10 web
+    build: ./IhomeWeb
+    links: 
+        - consul
+    ports: 
+        - "8990:8990"
+getarea:
+    command: --registry_address=registry:8500 --registry_interval=5 --registry_ttl=10 srv
+    build: ./GetArea
+    links: 
+        - consul

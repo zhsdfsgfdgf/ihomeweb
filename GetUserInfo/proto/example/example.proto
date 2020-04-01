@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package go.micro.srv.GetUserInfo;
+
+service Example {
+	rpc GetUserInfo(Request) returns (Response) {}
+	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
+	rpc PingPong(stream Ping) returns (stream Pong) {}
+}
+
+message Message {
+	string say = 1;
+}
+
+message Request {
+	string Sessionid = 1 ;
+}
+
+message Response {
+	string Errno =1 ; 
+	string Errmsg = 2;
+	int64 User_id = 3 ;
+	string Name =4;
+	string Mobile =5 ; 
+	string Real_name =6 ; 
+	string Id_card =7;
+	string Avatar_url =8 ;
+}
+
+message StreamingRequest {
+	int64 count = 1;
+}
+
+message StreamingResponse {
+	int64 count = 1;
+}
+
+message Ping {
+	int64 stroke = 1;
+}
+
+message Pong {
+	int64 stroke = 1;
+}
