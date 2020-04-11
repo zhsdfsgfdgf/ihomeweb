@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: ihomeweb 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ihomeweb 
+  template:   
+    metadata:
+      labels:
+        app: ihomeweb 
+    spec:
+      containers: 
+        - image: ihomeweb-k8s:v1
+          name: ihomeweb
+          imagePullPolicy: IfNotPresent  
+          command: [
+           "/ihomeweb",
+           "--registry_address=xxxx:8500",
+           "--register_interval=5",
+           "--register_ttl=10"
+           ]
+          ports:
+          - containerPort: 8990 
+            name: ihomeweb
