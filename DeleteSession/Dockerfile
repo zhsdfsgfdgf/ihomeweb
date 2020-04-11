@@ -1,3 +1,4 @@
 FROM alpine:3.2
-ADD DeleteSession-srv /DeleteSession-srv
-ENTRYPOINT [ "/DeleteSession-srv" ]
+ADD conf /conf
+ADD  deletesession /deletesession
+ENTRYPOINT [ "/deletesession" ]

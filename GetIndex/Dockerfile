@@ -1,3 +1,4 @@
 FROM alpine:3.2
-ADD GetIndex-srv /GetIndex-srv
-ENTRYPOINT [ "/GetIndex-srv" ]
+ADD conf /conf
+ADD  getindex /getindex
+ENTRYPOINT [ "/getindex" ]

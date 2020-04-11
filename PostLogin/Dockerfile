@@ -1,3 +1,4 @@
 FROM alpine:3.2
-ADD PostLogin-srv /PostLogin-srv
-ENTRYPOINT [ "/PostLogin-srv" ]
+ADD conf /conf
+ADD  postlogin /postlogin
+ENTRYPOINT [ "/postlogin" ]
