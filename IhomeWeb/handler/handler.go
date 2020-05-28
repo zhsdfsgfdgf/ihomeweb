@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"image"
 	"image/png"
 	"io/ioutil"
@@ -899,31 +900,13 @@ func PostHousesImage(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 func GetHouseInfo(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	beego.Info("GetUserInfo 获取房源信息")
 	/*
-		获取传来的cookie
-	*/
-	userlogin, err := r.Cookie("userlogin")
-	if err != nil {
-		resp := map[string]interface{}{
-			"errno":  utils.RECODE_SESSIONERR,
-			"errmsg": utils.RecodeText(utils.RECODE_SESSIONERR),
-		}
-		w.Header().Set("Content-Type", "application/json")
-		if err := json.NewEncoder(w).Encode(resp); err != nil {
-			http.Error(w, err.Error(), 503)
-			beego.Info(err)
-			return
-		}
-		return
-	}
-	/*
 		调用后端服务
 	*/
 	server := grpc.NewService()
 	server.Init()
 	exampleClient := GETHOUSEINFO.NewExampleService("go.micro.srv.GetHouseInfo", server.Client())
 	rsp, err := exampleClient.GetHouseInfo(context.TODO(), &GETHOUSEINFO.Request{
-		Sessionid: userlogin.Value,
-		Id:        ps.ByName("id"),
+		Id: ps.ByName("id"),
 	})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -934,9 +917,7 @@ func GetHouseInfo(w http.ResponseWriter, r *http.Request, ps httprouter.Params) 
 	*/
 	house := models.House{}
 	json.Unmarshal(rsp.Housedata, &house)
-
 	dataMap := make(map[string]interface{})
-	dataMap["user_id"] = rsp.Userid
 	dataMap["house"] = house.To_one_house_desc()
 
 	resp := map[string]interface{}{
@@ -944,6 +925,7 @@ func GetHouseInfo(w http.ResponseWriter, r *http.Request, ps httprouter.Params) 
 		"errmsg": rsp.Errmsg,
 		"data":   dataMap,
 	}
+	fmt.Println(dataMap["house"])
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
 		http.Error(w, err.Error(), 500)

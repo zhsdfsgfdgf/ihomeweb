@@ -47,12 +47,6 @@ func (e *Example) GetHouseInfo(ctx context.Context, req *example.Request, rsp *e
 		return nil
 	}
 	/*
-		根据sessionid获取用户id
-	*/
-	sessioniduserid := req.Sessionid + "user_id"
-	value_id := bm.Get(sessioniduserid)
-	id := int64(value_id.([]uint8)[0])
-	/*
 		根据房屋id查找房屋缓存信息
 	*/
 	houseId, _ := strconv.Atoi(req.Id)
@@ -60,7 +54,6 @@ func (e *Example) GetHouseInfo(ctx context.Context, req *example.Request, rsp *e
 	houseIfoValue := bm.Get(houseInfoKey)
 	if houseIfoValue != nil {
 		beego.Info("房屋信息在缓存中")
-		rsp.Userid = id
 		rsp.Housedata = houseIfoValue.([]byte)
 	}
 	/*
@@ -80,7 +73,6 @@ func (e *Example) GetHouseInfo(ctx context.Context, req *example.Request, rsp *e
 	houseMix, err := json.Marshal(house)
 	bm.Put(houseInfoKey, houseMix, time.Second*3600)
 
-	rsp.Userid = id
 	rsp.Housedata = houseMix
 
 	return nil

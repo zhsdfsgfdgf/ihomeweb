@@ -14,14 +14,12 @@ message Message {
 
 message Request {
 	string Id =1;
-	string Sessionid =2;
 }
 
 message Response {
 	string Errno=1;
 	string Errmsg=2;
 	bytes Housedata=3;
-	int64 Userid=4;
 }
 
 message StreamingRequest {
