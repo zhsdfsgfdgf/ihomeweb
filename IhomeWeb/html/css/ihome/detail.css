@@ -99,7 +99,7 @@ body {
     color: #000;
 }
 .icon-house, .icon-sofa, .icon-bed, .icon-room, .icon-user, .wirelessnetwork-ico, .wirednetwork-ico, .shower-ico, .tv-ico, .aircondition-ico, .heater-ico, .smoke-ico, .drinking-ico, .brush-ico, .soap-ico, .slippers-ico, .toiletpaper-ico, .towel-ico, .toiletries-ico, .icebox-ico, .washer-ico, .hotbathtub-ico, .elevator-ico, .iscook-ico, .pet-ico, .meet-ico, .accesssys-ico, .parkingspace-ico, .jinzhi-ico {
-    background: url(/static/images/houseicon_sprite.png) 0 0 no-repeat;
+    background: url(/images/houseicon_sprite.png) 0 0 no-repeat;
     display: inline-block;
     width: 30px;
     height: 30px;
